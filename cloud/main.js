@@ -31,4 +31,13 @@ Parse.Cloud.define('v1-sign-in', async (req) => {
 	  phone: { required: true },
 	}
   })
-  
+
+  function formatUser (u) {
+	return {
+	  id: u.objectId,
+	  token: u.sessionToken,
+	  fullname: u.fullname,
+	  document: u.document,
+	  phone: u.phone
+	}
+  }
