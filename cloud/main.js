@@ -7,3 +7,7 @@ Parse.Cloud.define('v1-sign-in', async (req) => {
 	  password: { required: true },
 	}
   })
+
+  Parse.Cloud.define('v1-get-user', async (req) => {
+	return req.user
+  })
