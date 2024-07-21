@@ -9,7 +9,7 @@ Parse.Cloud.define('v1-sign-in', async (req) => {
   })
 
   Parse.Cloud.define('v1-get-user', async (req) => {
-	return req.user
+	return formatUser(req.user.toJSON())
   })
 
   Parse.Cloud.define('v1-sign-up', async (req) => {
@@ -31,6 +31,13 @@ Parse.Cloud.define('v1-sign-in', async (req) => {
 	  phone: { required: true },
 	}
   })
+
+  function formatSpeciality(s) {
+	return {
+		id: s.objectId,
+		name: s.name
+	}
+  }
 
   function formatUser (u) {
 	return {
