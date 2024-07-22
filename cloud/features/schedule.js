@@ -1,5 +1,6 @@
 const Professional = Parse.Object.extend('Professional');
 const Schedule = Parse.Object.extend('Schedule');
+const Service = Parse.Object.extend('Service')
 
 Parse.Cloud.define('v1-get-scheduling-slots', async (req) => {
 	const duration = req.params.duration;
@@ -95,3 +96,16 @@ Parse.Cloud.define('v1-get-scheduling-slots', async (req) => {
 		}
 	}
 });
+
+Parse.Cloud.define('v1-get-schedule-services', async (req) => {
+    const professionalId = req.params.professionalId
+    const serviceIds = req.params.serviceIds 
+    const queryProfisional = new Parse.Query(Professional)
+    queryProfisional.include('services')
+    const professional = await queryProfisional.get(professionalId, {useMasterKey: true})
+    const services = professional.get('services').filter((s) => serviceIds.includes(s.id))
+    if(services.length != serviceIds.length) throw 'invalid_services'
+    return services
+}, {
+    requireUser: true
+})
