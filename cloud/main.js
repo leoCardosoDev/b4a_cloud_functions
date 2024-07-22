@@ -1,4 +1,4 @@
-require('features/schedule.js')
+require('./features/schedule.js')
 
 const Professional = Parse.Object.extend('Professional');
 const Specialty = Parse.Object.extend('Specialty');
