@@ -1,4 +1,4 @@
-require('./helpers/formart.js')
+const { formatSchedule }= require('./helpers/formart.js')
 
 const Professional = Parse.Object.extend('Professional');
 const Schedule = Parse.Object.extend('Schedule');

@@ -44,3 +44,5 @@ function formatUser(u) {
 		phone: u.phone,
 	}
 }
+
+module.exports = { formatUser, formatProfessional, formatSpecialty, formatService, formatSchedule };
