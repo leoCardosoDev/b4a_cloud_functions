@@ -1,3 +1,5 @@
+require('./helpers/formart.js')
+
 Parse.Cloud.define('v1-sign-in', async (req) => {
 	const user = await Parse.User.logIn(req.params.email.toLowerCase(), req.params.password);
 	return formatUser(user.toJSON());
@@ -45,13 +47,3 @@ Parse.Cloud.define('v1-sign-up', async (req) => {
 		},
 	}
 });
-
-function formatUser(u) {
-	return {
-		id: u.objectId,
-		token: u.sessionToken,
-		fullname: u.fullname,
-		document: u.document,
-		phone: u.phone,
-	}
-}

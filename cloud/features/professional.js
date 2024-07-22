@@ -1,3 +1,5 @@
+require('./helpers/formart.js')
+
 const Professional = Parse.Object.extend('Professional');
 const Service = Parse.Object.extend('Service');
 const Specialty = Parse.Object.extend('Specialty');
@@ -129,30 +131,3 @@ Parse.Cloud.define('v1-get-professionals', async (req) => {
 		
 	}
 });
-
-function formatService(s) {
-    return {
-        id: s.objectId,
-        name: s.name,
-        price: s.price,
-        duration: s.duration,
-        available: s.available,
-    }
-}
-
-function formatSpecialty(s) {
-	return {
-		id: s.objectId,
-		name: s.name
-	}
-}
-
-function formatProfessional(p) {
-	return {
-		id: p.objectId,
-		name: p.name,
-		specialties: p.specialties.map((s) => formatSpecialty(s)),
-		crm: p.crm,
-		services: p.services.filter((s) => s.available).map((s) => formatService(s)),
-	};
-}

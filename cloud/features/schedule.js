@@ -1,3 +1,5 @@
+require('./helpers/formart.js')
+
 const Professional = Parse.Object.extend('Professional');
 const Schedule = Parse.Object.extend('Schedule');
 const Service = Parse.Object.extend('Service');
@@ -66,42 +68,7 @@ Parse.Cloud.define('v1-get-user-schedules', async (req) => {
     requireUser: true,
 });
 
-function formatSchedule(s) {
-    return {
-        id: s.objectId,
-        startDate: s.startDate.iso,
-        endDate: s.endDate.iso,
-        status: s.status,
-        professional: formatProfessional(s.professional),
-        services: s.services.map(formatService)
-    }
-}
 
-function formatService(s) {
-    return {
-        id: s.objectId,
-        name: s.name,
-        price: s.price,
-		duration: s.duration,
-		available: s.available,
-    }
-}
-
-function formatSpecialty(s) {
-	return {
-		id: s.objectId,
-		name: s.name
-	}
-}
-
-function formatProfessional(p) {
-	return {
-		id: p.objectId,
-		name: p.name,
-		specialties: p.specialties.map((s) => formatSpecialty(s)),
-		crm: p.crm,
-	};
-}
 
 async function getAvailableSlots(duration, professionalId, startDate, endDate) {
 	const professional = new Professional();
