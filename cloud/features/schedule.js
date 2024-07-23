@@ -104,6 +104,36 @@ Parse.Cloud.define('v1-professional-cancel-schedule', async (req) => {
 	}
 });
 
+Parse.Cloud.define('v1-get-professional-agenda', async (req) => {
+	const queryProfessional = new Parse.Query(Professional);
+    queryProfessional.equalTo('owner', req.user);
+    const professional = await queryProfessional.first({useMasterKey: true});
+
+    if(!professional) throw 'INVALID_PROFESSIONAL';
+
+	const querySchedules = new Parse.Query(Schedule);
+	querySchedules.equalTo('professional', professional);
+	querySchedules.greaterThanOrEqualTo('startDate', new Date(req.params.startDate));
+	querySchedules.lessThanOrEqualTo('startDate', new Date(req.params.endDate));
+	querySchedules.equalTo('status', 'active');
+	querySchedules.ascending('startDate');
+	querySchedules.include('user', 'services');
+	querySchedules.exclude('professional');
+	
+	const schedules = await querySchedules.find({useMasterKey: true});
+
+	return schedules.map((s) => formatSchedule(s.toJSON()));
+}, {
+	requireUser: true,
+	fields: {
+		startDate: {
+			required: true,
+		},
+		endDate: {
+			required: true,
+		},
+	}
+});
 
 async function getAvailableSlots(duration, professionalId, startDate, endDate) {
 	const professional = new Professional();
