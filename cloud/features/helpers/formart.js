@@ -4,9 +4,23 @@ function formatSchedule(s) {
         startDate: s.startDate.iso,
         endDate: s.endDate.iso,
         status: s.status,
-        professional: formatProfessional(s.professional),
-        services: s.services.map(formatService)
+        professional: s.professional != null ? _formatProfessional(s.professional) : undefined,
+        services: s.services.map(formatService),
+		user: s.user != null ? {
+			id: s.user.objectId,
+			fullname: s.user.fullname,
+			phone: s.user.phone
+		} : null,
     }
+}
+
+function _formatProfessional(p) {
+	return {
+		id: p.objectId,
+		name: p.name,
+		specialties: p.specialties != null ? p.specialties.map((s) => formatSpecialty(s)) : undefined,
+		crm: p.crm,
+	};
 }
 
 function formatService(s) {
