@@ -68,6 +68,23 @@ Parse.Cloud.define('v1-get-user-schedules', async (req) => {
     requireUser: true,
 });
 
+Parse.Cloud.define('v1-cancel-schedule', async (req) => {
+	const schedule = new Schedule();
+	schedule.id = req.params.scheduleId;
+	await schedule.fetch({useMasterKey: true});
+
+	if(req.user.id != schedule.get('user').id) throw 'INVALID_USER';
+
+	schedule.set('status', 'canceled');
+	await schedule.save(null, {useMasterKey: true});
+}, {
+	requireUser: true,
+	fields: {
+		scheduleId: {
+			required: true
+		}
+	}
+});
 
 
 async function getAvailableSlots(duration, professionalId, startDate, endDate) {
