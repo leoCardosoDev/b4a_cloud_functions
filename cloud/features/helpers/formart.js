@@ -57,11 +57,19 @@ function formatRating(r) {
     }
 }
 
+function formatInsurance(i) {
+    return {
+        id: i.objectId,
+        name: i.name
+    }
+}
+
 module.exports = { 
 	formatUser, 
 	formatProfessional, 
 	formatSpecialty, 
 	formatService, 
 	formatSchedule,
-	formatRating
+	formatRating,
+	formatInsurance
 };

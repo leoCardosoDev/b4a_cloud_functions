@@ -3,6 +3,7 @@ const { formatService, formatProfessional } = require( "./helpers/formart");
 const Professional = Parse.Object.extend('Professional');
 const Service = Parse.Object.extend('Service');
 const Specialty = Parse.Object.extend('Specialty');
+const Insurance = Parse.Object.extend('Insurance');
 
 Parse.Cloud.define('v1-save-schedule-rule', async (req) => {
     const queryProfessional = new Parse.Query(Professional);
@@ -122,9 +123,7 @@ Parse.Cloud.define('v1-edit-professional', async (req) => {
     const queryProfessional = new Parse.Query(Professional);
     queryProfessional.equalTo('owner', req.user);
     const professional = await queryProfessional.first({useMasterKey: true});
-
     if(!professional) throw 'INVALID_PROFESSIONAL';
-
     professional.set('address', req.params.address);
     professional.set('phone', req.params.phone);
     professional.set('name', req.params.name);
@@ -141,7 +140,6 @@ Parse.Cloud.define('v1-edit-professional', async (req) => {
         return specialty;
     }));
     await professional.save(null, {useMasterKey: true});
-
     return await getProfessional(professional.id);
 }, {
     requireUser: true,

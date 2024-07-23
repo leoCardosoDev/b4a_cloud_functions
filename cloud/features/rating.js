@@ -3,7 +3,6 @@ const { formatRating } = require( "./helpers/formart");
 const Rating = Parse.Object.extend('Rating');
 const Professional = Parse.Object.extend('Professional');
 
-
 Parse.Cloud.define('v1-rate-professional', async (req) => {
     const professional = new Professional();
     professional.id = req.params.professionalId;
