@@ -107,3 +107,13 @@ Parse.Cloud.define('v1-get-professionals', async (req) => {
 	fields: {
 	}
 });
+
+Parse.Cloud.define('v1-get-professional', async (req) => {
+	return await getProfessional(req.params.professionalId);
+}, {
+	fields: {
+		professionalId: {
+            required: true,
+        }
+	}
+});
