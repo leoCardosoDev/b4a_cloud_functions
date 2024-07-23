@@ -1,4 +1,4 @@
-const { formatService, formatProfessional } = require('./helpers/formart.js')
+import { formatService, formatProfessional } from './helpers/formart.js'
 
 const Professional = Parse.Object.extend('Professional');
 const Service = Parse.Object.extend('Service');
