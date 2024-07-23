@@ -44,7 +44,7 @@ Parse.Cloud.define('v1-schedule-services', async (req) => {
     schedule.set('status', 'active');
     schedule.set('services', services);
     await schedule.save(null, {useMasterKey: true});
-    return schedule;
+    return formatSchedule(schedule.toJSON());
 }, {
     requireUser: true,
 });
