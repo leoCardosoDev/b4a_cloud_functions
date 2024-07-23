@@ -117,3 +117,55 @@ Parse.Cloud.define('v1-get-professional', async (req) => {
         }
 	}
 });
+
+Parse.Cloud.define('v1-edit-professional', async (req) => {
+    const queryProfessional = new Parse.Query(Professional);
+    queryProfessional.equalTo('owner', req.user);
+    const professional = await queryProfessional.first({useMasterKey: true});
+
+    if(!professional) throw 'INVALID_PROFESSIONAL';
+
+    professional.set('address', req.params.address);
+    professional.set('phone', req.params.phone);
+    professional.set('name', req.params.name);
+    professional.set('location', new Parse.GeoPoint(req.params.location));
+    professional.set('crm', req.params.crm);
+    professional.set('insurances', req.params.insuranceIds.map((i) => {
+        const insurance = new Insurance();
+        insurance.id = i;
+        return insurance;
+    }));
+    professional.set('specialties', req.params.specialtyIds.map((i) => {
+        const specialty = new Specialty();
+        specialty.id = i;
+        return specialty;
+    }));
+    await professional.save(null, {useMasterKey: true});
+
+    return await getProfessional(professional.id);
+}, {
+    requireUser: true,
+    fields: {
+        address: {
+            required: true,
+        },
+        phone: {
+            required: true,
+        },
+        name: {
+            required: true,
+        },
+        location: {
+            required: true,
+        },
+        crm: {
+            required: true,
+        },
+        specialtyIds: {
+            required: true,
+        },
+        insuranceIds: {
+            required: true,
+        },
+    }
+});
