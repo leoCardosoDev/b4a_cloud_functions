@@ -194,3 +194,21 @@ Parse.Cloud.define('v1-set-professional-picture', async (req) => {
         }
     }
 });
+
+
+Parse.Cloud.define('v1-remove-professional-picture', async (req) => {
+    const queryProfessional = new Parse.Query(Professional);
+    queryProfessional.equalTo('owner', req.user);
+    const professional = await queryProfessional.first({useMasterKey: true});
+
+    if(!professional) throw 'INVALID_PROFESSIONAL';
+
+    await professional.get('profilePicture').destroy({useMasterKey: true});
+    professional.unset('profilePicture');
+    await professional.save(null, {useMasterKey: true});
+    
+    return await getProfessional(professional.id);
+}, {
+    requireUser: true,
+});
+
