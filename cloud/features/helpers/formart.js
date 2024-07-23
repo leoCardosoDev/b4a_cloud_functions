@@ -38,6 +38,7 @@ function formatProfessional(p) {
 		address: p.address,
 		phone: p.phone,
 		insurances: p.insurances.map((i) => formatInsurance(i)),
+		picture: p.profilePicture != null ? p.profilePicture?.url : null
 	};
 }
 

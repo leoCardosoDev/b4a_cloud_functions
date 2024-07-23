@@ -173,13 +173,10 @@ Parse.Cloud.define('v1-set-professional-picture', async (req) => {
     const queryProfessional = new Parse.Query(Professional);
     queryProfessional.equalTo('owner', req.user);
     const professional = await queryProfessional.first({useMasterKey: true});
-
     if(!professional) throw 'INVALID_PROFESSIONAL';
-
     const file = new Parse.File(professional.id + '_picture.' + req.params.extension, { base64: req.params.base64Image });
     professional.set('profilePicture', file);
     await professional.save(null, {useMasterKey: true});
-
     return await getProfessional(professional.id);
 }, {
     requireUser: true,
@@ -198,13 +195,10 @@ Parse.Cloud.define('v1-remove-professional-picture', async (req) => {
     const queryProfessional = new Parse.Query(Professional);
     queryProfessional.equalTo('owner', req.user);
     const professional = await queryProfessional.first({useMasterKey: true});
-
     if(!professional) throw 'INVALID_PROFESSIONAL';
-
     await professional.get('profilePicture').destroy({useMasterKey: true});
     professional.unset('profilePicture');
     await professional.save(null, {useMasterKey: true});
-    
     return await getProfessional(professional.id);
 }, {
     requireUser: true,
