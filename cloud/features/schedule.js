@@ -86,6 +86,24 @@ Parse.Cloud.define('v1-cancel-schedule', async (req) => {
 	}
 });
 
+Parse.Cloud.define('v1-professional-cancel-schedule', async (req) => {
+	const querySchedule = new Parse.Query(Schedule);
+	querySchedule.include('professional');
+	const schedule = await querySchedule.get(req.params.scheduleId, {useMasterKey: true});
+	
+	if(req.user.id != schedule.get('professional').get('owner').id && !schedule.get('professional').get('users').some((u) => u.id == req.user.id)) throw 'INVALID_USER';
+
+	schedule.set('status', 'canceled');
+	await schedule.save(null, {useMasterKey: true});
+}, {
+	requireUser: true,
+	fields: {
+		scheduleId: {
+			required: true
+		}
+	}
+});
+
 
 async function getAvailableSlots(duration, professionalId, startDate, endDate) {
 	const professional = new Professional();
