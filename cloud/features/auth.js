@@ -1,4 +1,4 @@
-import { formatUser } from './helpers/formart.js';
+const { formatUser } = require( "./helpers/formart");
 
 Parse.Cloud.define('v1-sign-in', async (req) => {
 	const user = await Parse.User.logIn(req.params.email.toLowerCase(), req.params.password);
