@@ -32,6 +32,8 @@ function formatProfessional(p) {
 		name: p.name,
 		specialties: p.specialties.map((s) => formatSpecialty(s)),
 		crm: p.crm,
+		rating: p.rating,
+		ratingCount: p.ratingCount
 	};
 }
 
