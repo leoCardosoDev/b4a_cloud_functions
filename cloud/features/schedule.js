@@ -127,6 +127,7 @@ async function getAvailableSlots(duration, professionalId, startDate, endDate) {
 	schedulingsQuery.greaterThanOrEqualTo('startDate', new Date(startDate.getTime() - 24*60*60*1000));
 	schedulingsQuery.lessThanOrEqualTo('endDate', new Date(endDate.getTime() + 24*60*60*1000));
 	schedulingsQuery.ascending('startDate');
+	schedulingsQuery.equalTo('status', 'active');
 	const schedulings = await schedulingsQuery.find({useMasterKey: true});
 	let days = 0;
 	const availableSlots = [];
