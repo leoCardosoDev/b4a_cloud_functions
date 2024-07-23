@@ -1,3 +1,5 @@
+import { formatRating } from "./helpers/formart";
+
 const Rating = Parse.Object.extend('Rating');
 const Professional = Parse.Object.extend('Professional');
 
@@ -39,7 +41,6 @@ Parse.Cloud.define('v1-rate-professional', async (req) => {
 Parse.Cloud.define('v1-get-professional-ratings', async (req) => {
     const professional = new Professional();
     professional.id = req.params.professionalId;
-
     const queryRatings = new Parse.Query(Rating);
     queryRatings.equalTo('professional', professional);
     queryRatings.include('user');
@@ -47,7 +48,6 @@ Parse.Cloud.define('v1-get-professional-ratings', async (req) => {
     queryRatings.limit(20);
     queryRatings.skip(20 * req.params.page);
     const ratings = await queryRatings.find({useMasterKey: true});
-
     return ratings.map((r) => formatRating(r.toJSON()));
 }, {
     fields: {

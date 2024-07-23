@@ -47,4 +47,21 @@ function formatUser(u) {
 	}
 }
 
-module.exports = { formatUser, formatProfessional, formatSpecialty, formatService, formatSchedule };
+function formatRating(r) {
+    return {
+        id: r.objectId,
+        comments: r.comments,
+        stars: r.stars,
+        userName: r.user.fullname,
+        createdAt: r.createdAt,
+    }
+}
+
+module.exports = { 
+	formatUser, 
+	formatProfessional, 
+	formatSpecialty, 
+	formatService, 
+	formatSchedule,
+	formatRating
+};
