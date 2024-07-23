@@ -212,3 +212,10 @@ Parse.Cloud.define('v1-remove-professional-picture', async (req) => {
     requireUser: true,
 });
 
+async function getProfessional(professionalId) {
+    const query = new Parse.Query(Professional);
+	query.include('specialties', 'insurances', 'services');
+
+	const result = await query.get(professionalId, {useMasterKey: true});
+	return formatProfessional(result.toJSON());
+}
