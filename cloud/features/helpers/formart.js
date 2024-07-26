@@ -83,6 +83,16 @@ function formatInsurance(i) {
     }
 }
 
+function formatNotification(n) {
+	return {
+		id: n.objectId,
+		isRead: n.isRead,
+		title: replaceVariables(n.notification.title, n.variables),
+		subtitle: replaceVariables(n.notification.subtitle, n.variables),
+		page: replaceVariables(n.notification.page, n.variables)
+	}
+}
+
 module.exports = { 
 	formatUser, 
 	formatProfessional, 
@@ -90,5 +100,6 @@ module.exports = {
 	formatService, 
 	formatSchedule,
 	formatRating,
-	formatInsurance
+	formatInsurance,
+	formatNotification
 };

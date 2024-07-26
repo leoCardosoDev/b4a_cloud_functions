@@ -1,3 +1,5 @@
+const { formatNotification } = require( "./helpers/formart");
+
 const Device = Parse.Object.extend('Device');
 const DynamicNotification = Parse.Object.extend('DynamicNotification');
 const Notification = Parse.Object.extend('Notification');
@@ -121,16 +123,6 @@ async function sendPushNotification(userId, dynamicNotificationKey, variables) {
     const result = await admin.messaging().sendMulticast(message);
     
 	return result;
-}
-
-function formatNotification(n) {
-	return {
-		id: n.objectId,
-		isRead: n.isRead,
-		title: replaceVariables(n.notification.title, n.variables),
-		subtitle: replaceVariables(n.notification.subtitle, n.variables),
-		page: replaceVariables(n.notification.page, n.variables)
-	}
 }
 
 function replaceVariables(text, variables) {
