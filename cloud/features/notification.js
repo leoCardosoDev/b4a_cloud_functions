@@ -4,10 +4,9 @@ const Device = Parse.Object.extend('Device');
 const DynamicNotification = Parse.Object.extend('DynamicNotification');
 const Notification = Parse.Object.extend('Notification');
 
-var admin = require('firebase-admin');
 
-var serviceAccount = require('../keys/app-agendamento-142c2-firebase-adminsdk-yhz4v-99ddefc0f6.json');
-
+var admin = require("firebase-admin");
+var serviceAccount = require("../keys/app-aggendamento-firebase-adminsdk-wpffv-2d01250cc1.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
