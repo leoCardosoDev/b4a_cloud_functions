@@ -1,5 +1,4 @@
 const { formatService, formatProfessional } = require( "./helpers/formart");
-
 const Professional = Parse.Object.extend('Professional');
 const Service = Parse.Object.extend('Service');
 const Specialty = Parse.Object.extend('Specialty');

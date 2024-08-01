@@ -120,4 +120,5 @@ function replaceVariables(text, variables) {
 
 module.exports = {
 	sendPushNotification,
+	replaceVariables
 };

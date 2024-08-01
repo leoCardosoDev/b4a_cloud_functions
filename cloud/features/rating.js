@@ -1,5 +1,4 @@
 const { formatRating } = require( "./helpers/formart");
-
 const Rating = Parse.Object.extend('Rating');
 const Professional = Parse.Object.extend('Professional');
 

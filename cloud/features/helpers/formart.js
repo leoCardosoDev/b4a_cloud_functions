@@ -1,3 +1,5 @@
+const { replaceVariables } = require( "../notification");
+
 function formatSchedule(s) {
     return {
         id: s.objectId,

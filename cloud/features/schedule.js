@@ -1,5 +1,4 @@
 const { formatSchedule } = require( "./helpers/formart");
-
 const Professional = Parse.Object.extend('Professional');
 const Schedule = Parse.Object.extend('Schedule');
 const Service = Parse.Object.extend('Service');
@@ -10,7 +9,6 @@ Parse.Cloud.define('v1-get-scheduling-slots', async (req) => {
 	const startDate = new Date(req.params.startDate);
 	const endDate = new Date(req.params.endDate);
 	return getAvailableSlots(duration, professionalId, startDate, endDate);
-
 }, {
 	fields: {
 		duration: {
